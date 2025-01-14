@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-<h1>Welcome to My Web App</h1>
-<ul>
-    <li><a href="/quests">View Quests</a></li>
-    <li><a href="/users">View Users</a></li>
-</ul>
-</body>
-</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="header.jsp">
+    <jsp:param name="pageTitle" value="Welcome"/>
+</jsp:include>
+<h2>Welcome to My Web App</h2>
+<p>Explore the quests and users sections to get started.</p>
+<jsp:include page="footer.jsp"/>

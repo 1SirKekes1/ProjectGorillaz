@@ -38,4 +38,16 @@ public class UserRepository implements Repository<User> {
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst();
     }
+
+    public UserRepository() {
+        initializeTestData();
+    }
+
+    private void initializeTestData() {
+        User user1 = new User(1L, "john_doe", "john@example.com", "password123");
+        save(user1);
+
+        User user2 = new User(2L, "jane_doe", "jane@example.com", "password456");
+        save(user2);
+    }
 }

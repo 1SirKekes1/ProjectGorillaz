@@ -1,19 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head>
-    <title>Users</title>
-</head>
-<body>
-<h1>Users</h1>
+<jsp:include page="header.jsp">
+    <jsp:param name="pageTitle" value="Users"/>
+</jsp:include>
+<h2>Users</h2>
 <ul>
     <c:forEach var="user" items="${users}">
         <li>
-            <h2>${user.value.username}</h2>
+            <h3>${user.value.username}</h3>
             <p>Email: ${user.value.email}</p>
         </li>
     </c:forEach>
 </ul>
-<a href="/">Back to Home</a>
-</body>
-</html>
+<jsp:include page="footer.jsp"/>

@@ -9,6 +9,8 @@ public class User extends Entity {
     private String username;
     private String email;
     private String password;
+    @Setter
+    private String base64Image;
 
     public User(Long id, String username, String email, String password) {
         super(id);
