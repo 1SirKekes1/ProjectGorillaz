@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Welcome"/>
 </jsp:include>

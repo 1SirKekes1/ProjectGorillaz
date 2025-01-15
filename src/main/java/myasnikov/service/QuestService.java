@@ -32,4 +32,5 @@ public class QuestService implements Service<Quest> {
     public void deleteById(Long id) {
         questRepository.deleteById(id);
     }
+
 }
