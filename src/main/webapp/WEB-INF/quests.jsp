@@ -15,7 +15,7 @@
             </c:if>
             <div>
                 <h3>${questEntry.value.title}
-                    <a href="${pageContext.request.contextPath}/quest?id=${questEntry.value.id}" class="play-button">PLAY</a>
+                    <a href="${pageContext.request.contextPath}/quest?questId=${questEntry.value.id}" class="play-button">PLAY</a>
                 </h3>
                 <p>${questEntry.value.description}</p>
             </div>
