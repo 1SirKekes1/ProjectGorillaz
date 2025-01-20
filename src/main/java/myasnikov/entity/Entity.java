@@ -6,5 +6,5 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Entity {
-    private Long id;
+  private Long id;
 }
