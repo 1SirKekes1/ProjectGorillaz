@@ -1,10 +1,7 @@
 package myasnikov.config;
 
 import lombok.Getter;
-import myasnikov.entity.Quest;
-import myasnikov.entity.QuestChoice;
-import myasnikov.entity.QuestStep;
-import myasnikov.entity.User;
+import myasnikov.entity.*;
 import myasnikov.repository.QuestRepository;
 import myasnikov.repository.Repository;
 import myasnikov.repository.UserRepository;
@@ -13,15 +10,17 @@ import java.util.List;
 
 public class AppConfig {
 
-  private AppConfig() {
-    initializeQuestTestData();
-    initializeUserTestData();
-  }
-
   @Getter private static final Repository<Quest> questRepository = new QuestRepository();
   @Getter private static final Repository<User> userRepository = new UserRepository();
 
-  public static void initializeQuestTestData() {
+  private AppConfig() {
+    initializeQuestTestData((QuestRepository) questRepository);
+    initializeUserTestData((UserRepository) userRepository);
+  }
+
+  private static final AppConfig appConfig = new AppConfig();
+
+  public static void initializeQuestTestData(QuestRepository questRepository) {
     Quest quest1 =
         new Quest(
             1L,
@@ -48,8 +47,8 @@ public class AppConfig {
                         new QuestChoice(5L, "Approach the object", 4L),
                         new QuestChoice(6L, "Ignore it and continue", 5L)),
                     "/images/number3.jpg"),
-                new QuestStep(4L, "You found diamonds", "/images/treasure.jpg", true),
-                new QuestStep(5L, "You lost", "/images/number3.jpg", false)),
+                new QuestStep(4L, "You found diamonds", "/images/treasure.jpg", EndType.WIN),
+                new QuestStep(5L, "You lost", "/images/number3.jpg", EndType.LOSE)),
             "/images/treasure.jpg");
     questRepository.save(quest1);
 
@@ -65,21 +64,31 @@ public class AppConfig {
                     List.of(
                         new QuestChoice(7L, "Enter the lair", 5L),
                         new QuestChoice(8L, "Look for another way", 6L)),
-                    "/images/treasure.jpg"),
+                    "/images/dragon.jpg"),
                 new QuestStep(
                     5L,
                     "You see the dragon sleeping. Do you attack or sneak past?",
                     List.of(
                         new QuestChoice(9L, "Attack the dragon", 7L),
                         new QuestChoice(10L, "Sneak past", 8L)),
-                    "/images/treasure.jpg"),
+                    "/images/dragon.jpg"),
                 new QuestStep(
                     6L,
                     "You find a secret passage. Do you take it?",
                     List.of(
                         new QuestChoice(11L, "Take the passage", 9L),
                         new QuestChoice(12L, "Return to the entrance", 4L)),
-                    "/images/treasure.jpg")),
+                    "/images/dragon.jpg"),
+                new QuestStep(
+                    7L,
+                    "You defeated the dragon and saved the princess",
+                    "/images/dragon.jpg",
+                    EndType.WIN),
+                new QuestStep(
+                    8L,
+                    "You failed and the dragon caught you",
+                    "/images/dragon.jpg",
+                    EndType.LOSE)),
             "/images/dragon.jpg");
     questRepository.save(quest2);
 
@@ -108,9 +117,12 @@ public class AppConfig {
                     9L,
                     "You find a mysterious altar. Do you interact with it?",
                     List.of(
-                        new QuestChoice(18L, "Interact with the altar", 13L),
-                        new QuestChoice(19L, "Ignore it and continue", 14L)),
-                    "/images/forest.jpg")),
+                        new QuestChoice(18L, "Interact with the altar", 11L),
+                        new QuestChoice(19L, "Ignore it and continue", 10L)),
+                    "/images/forest.jpg"),
+                new QuestStep(
+                    10L, "You were lost in the forest", "/images/forest.jpg", EndType.LOSE),
+                new QuestStep(11L, "You found the artifact", "/images/forest.jpg", EndType.WIN)),
             "/images/forest.jpg");
     questRepository.save(quest3);
 
@@ -131,17 +143,19 @@ public class AppConfig {
                     11L,
                     "You find a room with three doors. Which one do you choose?",
                     List.of(
-                        new QuestChoice(22L, "Left door", 13L),
-                        new QuestChoice(23L, "Middle door", 14L),
-                        new QuestChoice(24L, "Right door", 15L)),
+                        new QuestChoice(22L, "Left door", 12L),
+                        new QuestChoice(23L, "Middle door", 12L),
+                        new QuestChoice(24L, "Right door", 12L)),
                     "/images/pyramid.jpg"),
                 new QuestStep(
                     12L,
                     "You encounter a riddle. Do you try to solve it?",
                     List.of(
-                        new QuestChoice(25L, "Attempt to solve the riddle", 16L),
-                        new QuestChoice(26L, "Ignore the riddle", 17L)),
-                    "/images/pyramid.jpg")),
+                        new QuestChoice(25L, "Attempt to solve the riddle", 13L),
+                        new QuestChoice(26L, "Ignore the riddle", 14L)),
+                    "/images/pyramid.jpg"),
+                new QuestStep(13L, "You solved the riddle", "/images/pyramid.jpg", EndType.WIN),
+                new QuestStep(14L, "You failed the riddle", "/images/pyramid.jpg", EndType.LOSE)),
             "/images/pyramid.jpg");
     questRepository.save(quest4);
 
@@ -169,18 +183,27 @@ public class AppConfig {
                     15L,
                     "You hear footsteps approaching. Do you hide or confront the threat?",
                     List.of(
-                        new QuestChoice(31L, "Hide", 18L),
-                        new QuestChoice(32L, "Confront the threat", 19L)),
-                    "/images/dungeon.jpg")),
+                        new QuestChoice(31L, "Hide", 16L),
+                        new QuestChoice(32L, "Confront the threat", 17L)),
+                    "/images/dungeon.jpg"),
+                new QuestStep(16L, "You escaped the dungeon", "/images/dungeon.jpg", EndType.WIN),
+                new QuestStep(
+                    17L, "You were caught in the dungeon", "/images/dungeon.jpg", EndType.LOSE)),
             "/images/dungeon.jpg");
     questRepository.save(quest5);
   }
 
-  public static void initializeUserTestData() {
-    User user1 = new User(1L, "Khmelov", "Khmelov@example.com", "password123");
+  public static void initializeUserTestData(UserRepository userRepository) {
+    User user1 = new User(1L, "khmelov", "khmelov@example.com", "khmelov");
     userRepository.save(user1);
 
-    User user2 = new User(2L, "Alexey", "Alexey@example.com", "password456");
+    User user2 = new User(2L, "alexey", "khmelov@example.com", "alexey");
     userRepository.save(user2);
+
+    User user3 = new User(3L, "admin", "admin@example.com", "admin");
+    userRepository.save(user3);
+
+    User user4 = new User(3L, "test", "test@example.com", "test");
+    userRepository.save(user4);
   }
 }

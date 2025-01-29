@@ -58,6 +58,11 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -69,13 +74,13 @@
                 <version>3.4.0</version>
             </plugin>
         </plugins>
-    <resources>
-        <resource>
-            <directory>src/main/resources</directory>
-            <includes>
-                <include>**/*.jpg</include>
-            </includes>
-        </resource>
-    </resources>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.jpg</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

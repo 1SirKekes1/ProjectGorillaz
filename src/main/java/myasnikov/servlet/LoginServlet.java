@@ -16,7 +16,6 @@ import java.util.Optional;
 public class LoginServlet extends HttpServlet {
 
   private final UserRepository userRepository = (UserRepository) AppConfig.getUserRepository();
-  ;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -37,10 +36,12 @@ public class LoginServlet extends HttpServlet {
         req.getSession().setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/welcome.jsp").forward(req, resp);
       } else {
-        resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid password");
+        req.setAttribute("errorMessage", "Invalid password");
+        req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
       }
     } else {
-      resp.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
+      req.setAttribute("errorMessage", "User not found");
+      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
     }
   }
 }

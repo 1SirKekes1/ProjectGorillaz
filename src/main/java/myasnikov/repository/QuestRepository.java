@@ -6,15 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static myasnikov.config.AppConfig.initializeQuestTestData;
-
 public class QuestRepository implements Repository<Quest> {
   private final Map<Long, Quest> quests = new HashMap<>();
   private long nextId = 1;
-
-  public QuestRepository() {
-    initializeQuestTestData();
-  }
 
   @Override
   public void save(Quest quest) {
