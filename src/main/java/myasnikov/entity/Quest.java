@@ -1,23 +1,31 @@
 package myasnikov.entity;
 
-import lombok.*;
+
+import jakarta.persistence.*;
+
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Quest extends Entity {
+
+@Entity
+@Table(name = "quest")
+public class Quest{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Column(unique = true, nullable = false)
   private String title;
+
+  @Column(unique = true, nullable = false)
   private String description;
+
+  @OneToMany
   private List<QuestStep> steps;
+
+  @Column
   private String imagePath;
+
+  @Lob
   private String base64Image;
 
-  public Quest(Long id, String title, String description, List<QuestStep> steps, String imagePath) {
-    super(id);
-    this.title = title;
-    this.description = description;
-    this.steps = steps;
-    this.imagePath = imagePath;
-  }
 }

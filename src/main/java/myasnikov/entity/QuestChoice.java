@@ -1,17 +1,21 @@
 package myasnikov.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class QuestChoice extends Entity {
-  private String text;
-  private Long nextStepId;
+@Entity
+@Table(name = "quest_choice")
+public class QuestChoice {
 
-  public QuestChoice(Long id, String text, Long nextStepId) {
-    super(id);
-    this.text = text;
-    this.nextStepId = nextStepId;
-  }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Lob
+  private String text;
+
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "id", nullable = false)
+  private QuestStep nextStepId;
+
 }

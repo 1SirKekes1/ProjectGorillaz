@@ -1,32 +1,34 @@
 package myasnikov.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 import static myasnikov.entity.EndType.NONE;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class QuestStep extends Entity {
+@Entity
+@Table(name = "quest_step")
+public class QuestStep {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Lob
   private String description;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "id", nullable = false)
   private List<QuestChoice> choices;
+
+  @Column(name = "image_path")
   private String imagePath;
+
+  @Lob
   private String base64Image;
+
+  @Column(columnDefinition = "enum('NONE', 'WIN', 'LOSE'")
   private EndType endType = NONE;
 
-  public QuestStep(Long id, String description, List<QuestChoice> choices, String imagePath) {
-    super(id);
-    this.description = description;
-    this.choices = choices;
-    this.imagePath = imagePath;
-  }
-
-  public QuestStep(Long id, String description, String imagePath, EndType endType) {
-    super(id);
-    this.description = description;
-    this.imagePath = imagePath;
-    this.endType = endType;
-  }
 }
