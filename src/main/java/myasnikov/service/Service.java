@@ -5,7 +5,7 @@ import myasnikov.entity.Entity;
 import java.util.Map;
 import java.util.Optional;
 
-public interface Service<T extends Entity> {
+public interface Service<T> {
   void save(T entity);
 
   Optional<T> findById(Long id);

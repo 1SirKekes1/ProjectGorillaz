@@ -2,13 +2,18 @@ package myasnikov.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 
 @Entity
-@Table(name = "quest")
+@Table(schema = "game", name = "quest")
+@Getter
+@Setter
 public class Quest{
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -20,12 +25,12 @@ public class Quest{
   private String description;
 
   @OneToMany
+  @JoinColumn(name = "id")
   private List<QuestStep> steps;
 
-  @Column
-  private String imagePath;
-
   @Lob
-  private String base64Image;
+  @Basic(fetch = FetchType.LAZY)
+  @Column(name = "image_data", columnDefinition = "LONGBLOB")
+  private byte[] imageData;
 
 }

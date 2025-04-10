@@ -1,10 +1,12 @@
 package myasnikov.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
 @Entity
+@Table(schema = "game",name = "user")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,9 @@ public class User {
   @Column(nullable = false)
   private Long losses;
 
-  @Column(nullable = false)
-  private String base64Image;
+  @Lob
+  @Basic(fetch = FetchType.LAZY)
+  @Column(name = "image_data", columnDefinition = "LONGBLOB")
+  private byte[] imageData;
 
 }

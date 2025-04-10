@@ -1,15 +1,16 @@
 package myasnikov.service;
 
 import myasnikov.config.AppConfig;
+import myasnikov.dao.UserDao;
 import myasnikov.entity.User;
-import myasnikov.repository.Repository;
-import myasnikov.repository.UserRepository;
+
 
 import java.util.Map;
 import java.util.Optional;
 
 public class UserService implements Service<User> {
-  private final Repository<User> userRepository = AppConfig.getUserRepository();
+
+  UserDao userDao = ;
 
   @Override
   public void save(User user) {

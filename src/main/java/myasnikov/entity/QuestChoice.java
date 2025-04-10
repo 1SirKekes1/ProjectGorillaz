@@ -4,18 +4,19 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "quest_choice")
+@Table(schema = "game",name = "quest_choice")
 public class QuestChoice {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @Lob
+  @Column
   private String text;
 
   @OneToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "id", nullable = false)
-  private QuestStep nextStepId;
+  @MapsId
+  @JoinColumn(name = "id")
+  private QuestStep nextStep;
 
 }

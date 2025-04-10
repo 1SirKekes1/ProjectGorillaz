@@ -1,11 +1,13 @@
 package myasnikov.config;
 
+import myasnikov.entity.Quest;
+import myasnikov.entity.QuestChoice;
+import myasnikov.entity.QuestStep;
 import myasnikov.entity.User;
+
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.service.ServiceRegistry;
 
 import java.util.Properties;
 
@@ -18,6 +20,9 @@ public class HibernateConfig {
             try {
                 Configuration configuration = getConfiguration();
                 configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(QuestChoice.class);
+                configuration.addAnnotatedClass(Quest.class);
+                configuration.addAnnotatedClass(QuestStep.class);
                 sessionFactory = configuration.buildSessionFactory();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -32,8 +37,8 @@ public class HibernateConfig {
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
         properties.put(Environment.URL, "jdbc:postgresql://localhost:5432/your_db");
-        properties.put(Environment.USER, "your_username");
-        properties.put(Environment.PASS, "your_password");
+        properties.put(Environment.USER, "root");
+        properties.put(Environment.PASS, "root");
         properties.put(Environment.SHOW_SQL, "true");
         properties.put(Environment.FORMAT_SQL, "true");
         properties.put(Environment.HBM2DDL_AUTO, "validate");

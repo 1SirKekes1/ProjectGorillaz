@@ -1,29 +1,32 @@
 package myasnikov.config;
 
 import lombok.Getter;
+import myasnikov.dao.QuestChoiceDao;
+import myasnikov.dao.QuestDao;
+import myasnikov.dao.QuestStepDao;
+import myasnikov.dao.UserDao;
 import myasnikov.entity.*;
-import myasnikov.repository.QuestRepository;
-import myasnikov.repository.Repository;
-import myasnikov.repository.UserRepository;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class AppConfig {
 
-  @Getter private static final Repository<Quest> questRepository = new QuestRepository();
-  @Getter private static final Repository<User> userRepository = new UserRepository();
+  SessionFactory sessionFactory = HibernateConfig.getSessionFactory();
+  UserDao userDao = new UserDao(HibernateConfig.getSessionFactory());
+  QuestDao questDao = new QuestDao(HibernateConfig.getSessionFactory());
+  QuestStepDao questStepDao = new QuestStepDao(HibernateConfig.getSessionFactory());
+  QuestChoiceDao questChoiceDao = new QuestChoiceDao(HibernateConfig.getSessionFactory());
 
   private AppConfig() {
-    initializeQuestTestData((QuestRepository) questRepository);
-    initializeUserTestData((UserRepository) userRepository);
+
   }
 
   private static final AppConfig appConfig = new AppConfig();
 
-  public static void initializeQuestTestData(QuestRepository questRepository) {
+  public static void initializeQuestTestData(QuestDao questDao) {
     Quest quest1 =
         new Quest(
-            1L,
             "The Lost Treasure",
             "Find the hidden treasure in the ancient ruins.",
             List.of(
@@ -50,7 +53,7 @@ public class AppConfig {
                 new QuestStep(4L, "You found diamonds", "/images/treasure.jpg", EndType.WIN),
                 new QuestStep(5L, "You lost", "/images/number3.jpg", EndType.LOSE)),
             "/images/treasure.jpg");
-    questRepository.save(quest1);
+    questDao.save(quest1);
 
     Quest quest2 =
         new Quest(
@@ -90,7 +93,7 @@ public class AppConfig {
                     "/images/dragon.jpg",
                     EndType.LOSE)),
             "/images/dragon.jpg");
-    questRepository.save(quest2);
+    questDao.save(quest2);
 
     Quest quest3 =
         new Quest(
@@ -124,7 +127,7 @@ public class AppConfig {
                     10L, "You were lost in the forest", "/images/forest.jpg", EndType.LOSE),
                 new QuestStep(11L, "You found the artifact", "/images/forest.jpg", EndType.WIN)),
             "/images/forest.jpg");
-    questRepository.save(quest3);
+    questDao.save(quest3);
 
     Quest quest4 =
         new Quest(
@@ -157,7 +160,7 @@ public class AppConfig {
                 new QuestStep(13L, "You solved the riddle", "/images/pyramid.jpg", EndType.WIN),
                 new QuestStep(14L, "You failed the riddle", "/images/pyramid.jpg", EndType.LOSE)),
             "/images/pyramid.jpg");
-    questRepository.save(quest4);
+    questDao.save(quest4);
 
     Quest quest5 =
         new Quest(
@@ -190,20 +193,20 @@ public class AppConfig {
                 new QuestStep(
                     17L, "You were caught in the dungeon", "/images/dungeon.jpg", EndType.LOSE)),
             "/images/dungeon.jpg");
-    questRepository.save(quest5);
+    questDao.save(quest5);
   }
 
-  public static void initializeUserTestData(UserRepository userRepository) {
+  public static void initializeUserTestData(UserDao userDao) {
     User user1 = new User(1L, "khmelov", "khmelov@example.com", "khmelov");
-    userRepository.save(user1);
+    userDao.save(user1);
 
     User user2 = new User(2L, "alexey", "khmelov@example.com", "alexey");
-    userRepository.save(user2);
+    userDao.save(user2);
 
     User user3 = new User(3L, "admin", "admin@example.com", "admin");
-    userRepository.save(user3);
+    userDao.save(user3);
 
     User user4 = new User(3L, "test", "test@example.com", "test");
-    userRepository.save(user4);
+    userDao.save(user4);
   }
 }
