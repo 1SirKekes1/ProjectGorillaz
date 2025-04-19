@@ -11,13 +11,20 @@ public class GenericDao<T> {
 
     private final SessionFactory sessionFactory;
 
-    public GenericDao(final Class<T> clazzToSet, SessionFactory sessionFactory) {
-        this.entityClass = clazzToSet;
+    public GenericDao(final Class<T> classToSet, SessionFactory sessionFactory) {
+        this.entityClass = classToSet;
         this.sessionFactory = sessionFactory;
     }
 
     public T getById(final long id) {
         return getCurrentSession().get(entityClass, id);
+    }
+
+    public T getByStringAttribute(String attributeName, String value) {
+        String hql = "FROM " + entityClass.getSimpleName() + " WHERE " + attributeName + " = :value";
+        return getCurrentSession().createQuery(hql, entityClass)
+                .setParameter("value", value)
+                .uniqueResult();
     }
 
     public List<T> getItems(int offset, int count) {
@@ -43,7 +50,7 @@ public class GenericDao<T> {
         getCurrentSession().delete(entity);
     }
 
-    public void deleteById(final int entityId) {
+    public void deleteById(final Long entityId) {
         final T entity = getById(entityId);
         if (entity != null) {
             delete(entity);

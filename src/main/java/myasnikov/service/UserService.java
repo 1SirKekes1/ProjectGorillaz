@@ -5,55 +5,53 @@ import myasnikov.dao.UserDao;
 import myasnikov.entity.User;
 
 
-import java.util.Map;
+import java.util.List;
+
 import java.util.Optional;
 
 public class UserService implements Service<User> {
 
-  UserDao userDao = ;
+    UserDao userDao = AppConfig.getUserDao();
 
-  @Override
-  public void save(User user) {
-    if (user.getUsername() == null || user.getUsername().isEmpty()) {
-      throw new IllegalArgumentException("Username cannot be empty");
+    @Override
+    public void save(User user) {
+        userDao.save(user);
     }
-    userRepository.save(user);
-  }
 
-  @Override
-  public Optional<User> findById(Long id) {
-    return userRepository.findById(id);
-  }
-
-  @Override
-  public Map<Long, User> findAll() {
-    return userRepository.findAll();
-  }
-
-  @Override
-  public void deleteById(Long id) {
-    userRepository.deleteById(id);
-  }
-
-  public void incrementAttribute(Long userId, String attribute) {
-    Optional<User> userOptional = findById(userId);
-    if (userOptional.isPresent()) {
-      User user = userOptional.get();
-      switch (attribute.toLowerCase()) {
-        case "games":
-          user.setGames(user.getGames() + 1);
-          break;
-        case "wins":
-          user.setWins(user.getWins() + 1);
-          break;
-        case "losses":
-          user.setLosses(user.getLosses() + 1);
-          break;
-        default:
-          throw new IllegalArgumentException("Invalid attribute: " + attribute);
-      }
-    } else {
-      throw new IllegalArgumentException("User not found with ID: " + userId);
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(userDao.getById(id));
     }
-  }
+
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userDao.deleteById(id);
+    }
+
+    public void incrementAttribute(Long userId, String attribute) {
+        Optional<User> userOptional = findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            switch (attribute.toLowerCase()) {
+                case "games":
+                    user.setGames(user.getGames() + 1);
+                    break;
+                case "wins":
+                    user.setWins(user.getWins() + 1);
+                    break;
+                case "losses":
+                    user.setLosses(user.getLosses() + 1);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid attribute: " + attribute);
+            }
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
+    }
 }

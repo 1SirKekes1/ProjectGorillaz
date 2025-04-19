@@ -1,0 +1,29 @@
+## The Lost Treasure
+> Find the hidden treasure in the ancient ruins.
+cover: /images/treasure.jpg
+
+=== Step Start
+* You are standing in front of the ruins. There are two paths: left and right.
+image: /images/number1.jpg
+- Go left -> Cave
+- Go right -> Cave
+
+=== Step Cave
+* You find a dark cave. Do you enter?
+image: /images/number2.jpg
+- Enter the cave -> ShinyObject
+- Go back -> Start
+
+=== Step ShinyObject
+* You see a shiny object in the distance. Do you approach it?
+image: /images/number3.jpg
+- Approach the object -> FoundTreasure
+- Ignore it and continue -> Lost
+
+=== Step FoundTreasure (WIN)
+* You found diamonds
+image: /images/treasure.jpg
+
+=== Step Lost (LOSE)
+* You lost
+image: /images/number3.jpg

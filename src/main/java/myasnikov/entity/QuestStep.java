@@ -8,26 +8,28 @@ import java.util.List;
 import static myasnikov.entity.EndType.NONE;
 
 @Entity
-@Table(schema = "game",name = "quest_step")
+@Table(schema = "game", name = "quest_step")
+@Getter
+@Setter
 public class QuestStep {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-  @Column
-  private String description;
+    @Column
+    private String description;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "id", nullable = false)
-  private List<QuestChoice> choices;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = false)
+    private List<QuestChoice> choices;
 
-  @Lob
-  @Basic(fetch = FetchType.LAZY)
-  @Column(name = "image_data", columnDefinition = "LONGBLOB")
-  private byte[] imageData;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    private byte[] imageData;
 
-  @Column(columnDefinition = "enum('NONE', 'WIN', 'LOSE'")
-  private EndType endType = NONE;
+    @Column(columnDefinition = "enum('NONE', 'WIN', 'LOSE'")
+    private EndType endType = NONE;
 
 }

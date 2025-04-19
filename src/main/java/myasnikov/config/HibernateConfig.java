@@ -34,14 +34,13 @@ public class HibernateConfig {
 
     private static Configuration getConfiguration() {
         Properties properties = new Properties();
-        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
-        properties.put(Environment.URL, "jdbc:postgresql://localhost:5432/your_db");
+        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+        properties.put(Environment.URL, "jdbc:mysql://localhost:3306/game");
         properties.put(Environment.USER, "root");
         properties.put(Environment.PASS, "root");
         properties.put(Environment.SHOW_SQL, "true");
         properties.put(Environment.FORMAT_SQL, "true");
-        properties.put(Environment.HBM2DDL_AUTO, "validate");
+        properties.put(Environment.HBM2DDL_AUTO, "create");
         properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         Configuration configuration = new Configuration();
         configuration.setProperties(properties);

@@ -6,8 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import myasnikov.config.AppConfig;
+import myasnikov.dao.UserDao;
 import myasnikov.entity.User;
-import myasnikov.repository.UserRepository;
+
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,33 +16,31 @@ import java.util.Optional;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-  private final UserRepository userRepository = (UserRepository) AppConfig.getUserRepository();
+    private final UserDao userDao = AppConfig.getUserDao();
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    req.getRequestDispatcher("WEB-INF/login.jsp").forward(req, resp);
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
-    String username = req.getParameter("username");
-    String password = req.getParameter("password");
-    Optional<User> userOptional = userRepository.findByUsername(username);
-
-    if (userOptional.isPresent()) {
-      User user = userOptional.get();
-      if (user.getPassword().equals(password)) {
-        req.getSession().setAttribute("user", user);
-        req.getRequestDispatcher("/WEB-INF/welcome.jsp").forward(req, resp);
-      } else {
-        req.setAttribute("errorMessage", "Invalid password");
-        req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
-      }
-    } else {
-      req.setAttribute("errorMessage", "User not found");
-      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/login.jsp").forward(req, resp);
     }
-  }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        Optional<User> userOptional = Optional.ofNullable(userDao.getByStringAttribute("username", username));
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getPassword().equals(password)) {
+                req.getSession().setAttribute("user", user);
+                req.getRequestDispatcher("/WEB-INF/welcome.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("errorMessage", "Invalid password");
+                req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+            }
+        } else {
+            req.setAttribute("errorMessage", "User not found");
+            req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+        }
+    }
 }

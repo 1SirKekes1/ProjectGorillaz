@@ -11,9 +11,8 @@ import java.io.IOException;
 @WebServlet("/")
 public class StartPageServlet extends HttpServlet {
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    req.getRequestDispatcher("/WEB-INF/start-page.jsp").forward(req, resp);
-  }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/start-page.jsp").forward(req, resp);
+    }
 }

@@ -1,16 +1,15 @@
 package myasnikov.service;
 
-import myasnikov.entity.Entity;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 public interface Service<T> {
-  void save(T entity);
+    void save(T entity);
 
-  Optional<T> findById(Long id);
+    Optional<T> findById(Long id);
 
-  Map<Long, T> findAll();
+    List<T> findAll();
 
-  void deleteById(Long id);
+    void deleteById(Long id);
 }

@@ -1,0 +1,30 @@
+## The Cursed Forest
+> Navigate through the cursed forest to find the ancient artifact.
+cover: /images/forest.jpg
+
+=== Step ForestEntrance
+* You enter the forest. The path splits into three. Which way do you go?
+image: /images/forest.jpg
+- Take the left path -> River
+- Take the middle path -> Altar
+- Take the right path -> LostInForest
+
+=== Step River
+* You encounter a river. Do you swim across or look for a bridge?
+image: /images/forest.jpg
+- Swim across -> FoundArtifact
+- Look for a bridge -> FoundArtifact
+
+=== Step Altar
+* You find a mysterious altar. Do you interact with it?
+image: /images/forest.jpg
+- Interact with the altar -> FoundArtifact
+- Ignore it and continue -> LostInForest
+
+=== Step LostInForest (LOSE)
+* You were lost in the forest
+image: /images/forest.jpg
+
+=== Step FoundArtifact (WIN)
+* You found the artifact
+image: /images/forest.jpg

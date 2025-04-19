@@ -10,7 +10,8 @@ import myasnikov.service.QuestService;
 import myasnikov.utility.ImageConverter;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
+
 
 @WebServlet("/quests")
 public class QuestsServlet extends HttpServlet {
@@ -20,14 +21,8 @@ public class QuestsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    Map<Long, Quest> quests = questService.findAll();
+    List<Quest> quests = questService.findAll();
 
-    for (Quest quest : quests.values()) {
-      if (quest.getBase64Image() == null && quest.getImagePath() != null) {
-        String base64Image = imageConverter.convertImageToBase64(quest.getImagePath());
-        quest.setBase64Image(base64Image);
-      }
-    }
     req.setAttribute("quests", quests);
     req.getRequestDispatcher("/WEB-INF/quests.jsp").forward(req, resp);
   }
