@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1745258613823-1" author="Алексей">
+        <createTable schemaName="game" tableName="quest">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_quest"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_data" type="LONGBLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1745258613823-2" author="Алексей">
+        <createTable schemaName="game" tableName="quest_choice">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_quest_choice"/>
+            </column>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="step_id" type="BIGINT"/>
+            <column name="next_step_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1745258613823-3" author="Алексей">
+        <createTable schemaName="game" tableName="quest_step">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_quest_step"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="image_data" type="LONGBLOB"/>
+            <column name="end_type" type="enum('NONE', 'WIN', 'LOSE')"/>
+            <column name="quest_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1745258613823-4" author="Алексей">
+        <createTable schemaName="game" tableName="user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="games" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wins" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="losses" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_data" type="LONGBLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1745258613823-5" author="Алексей">
+        <addUniqueConstraint columnNames="description" constraintName="uc_quest_description" schemaName="game"
+                             tableName="quest"/>
+    </changeSet>
+    <changeSet id="1745258613823-6" author="Алексей">
+        <addUniqueConstraint columnNames="name" constraintName="uc_quest_name" schemaName="game" tableName="quest"/>
+    </changeSet>
+    <changeSet id="1745258613823-7" author="Алексей">
+        <addForeignKeyConstraint baseColumnNames="next_step_id" baseTableName="quest_choice" baseTableSchemaName="game"
+                                 constraintName="FK_QUEST_CHOICE_ON_NEXT_STEP" referencedColumnNames="id"
+                                 referencedTableName="quest_step" referencedTableSchemaName="game"/>
+    </changeSet>
+    <changeSet id="1745258613823-8" author="Алексей">
+        <addForeignKeyConstraint baseColumnNames="step_id" baseTableName="quest_choice" baseTableSchemaName="game"
+                                 constraintName="FK_QUEST_CHOICE_ON_STEP" referencedColumnNames="id"
+                                 referencedTableName="quest_step" referencedTableSchemaName="game"/>
+    </changeSet>
+    <changeSet id="1745258613823-9" author="Алексей">
+        <addForeignKeyConstraint baseColumnNames="quest_id" baseTableName="quest_step" baseTableSchemaName="game"
+                                 constraintName="FK_QUEST_STEP_ON_QUEST" referencedColumnNames="id"
+                                 referencedTableName="quest" referencedTableSchemaName="game"/>
+    </changeSet>
+
+</databaseChangeLog>

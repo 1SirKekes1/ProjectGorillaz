@@ -12,10 +12,10 @@
 <ul>
     <c:forEach var="user" items="${users}">
         <li>
-            <h3>${user.value.username}</h3>
-            <p>Email: ${user.value.email}</p>
-            <p>Wins: ${user.value.wins}</p>
-            <p>Losses: ${user.value.losses}</p>
+            <h3>${user.username}</h3>
+            <p>Email: ${user.email}</p>
+            <p>Wins: ${user.wins}</p>
+            <p>Losses: ${user.losses}</p>
         </li>
     </c:forEach>
 </ul>

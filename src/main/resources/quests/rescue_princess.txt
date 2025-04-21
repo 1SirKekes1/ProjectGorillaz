@@ -1,29 +1,29 @@
-## Rescue the Princess
-> Save the princess from the dragon's lair.
-cover: /images/dragon.jpg
+Quest: Rescue the Princess
+* Save the princess from the dragon's lair.
+image: dragon.jpg
 
-=== Step LairEntrance
+Step: LairEntrance
 * You arrive at the dragon's lair. Do you enter?
-image: /images/dragon.jpg
+image: dragon.jpg
 - Enter the lair -> DragonSleeping
 - Look for another way -> SecretPassage
 
-=== Step DragonSleeping
+Step: DragonSleeping
 * You see the dragon sleeping. Do you attack or sneak past?
-image: /images/dragon.jpg
+image: dragon.jpg
 - Attack the dragon -> DefeatedDragon
 - Sneak past -> CaughtByDragon
 
-=== Step SecretPassage
+Step: SecretPassage
 * You find a secret passage. Do you take it?
-image: /images/dragon.jpg
+image: dragon.jpg
 - Take the passage -> DefeatedDragon
 - Return to the entrance -> LairEntrance
 
-=== Step DefeatedDragon (WIN)
+Step: DefeatedDragon (WIN)
 * You defeated the dragon and saved the princess
-image: /images/dragon.jpg
+image: dragon.jpg
 
-=== Step CaughtByDragon (LOSE)
+Step: CaughtByDragon (LOSE)
 * You failed and the dragon caught you
-image: /images/dragon.jpg
+image: dragon.jpg

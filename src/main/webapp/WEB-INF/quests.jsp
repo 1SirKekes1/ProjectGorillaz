@@ -7,19 +7,19 @@
 <h2>Quests</h2>
 
 <div class="quest-grid">
-    <jsp:useBean id="quests" scope="request" type="java.util.HashMap"/>
+    <jsp:useBean id="quests" scope="request" type="java.util.List"/>
     <c:forEach var="questEntry" items="${quests}">
         <div class="quest-item">
-            <c:if test="${not empty questEntry.value.base64Image}">
-                <img src="data:image/jpeg;base64,${questEntry.value.base64Image}" alt="${questEntry.value.title}"
+            <c:if test="${not empty questEntry.imageData}">
+                <img src="data:image/jpeg;base64,${questEntry.imageDataBase64}" alt="${questEntry.name}"
                      style="width: 500px; height: 500px; border-radius: 10px;">
             </c:if>
             <div>
-                <h3>${questEntry.value.title}
-                    <a href="${pageContext.request.contextPath}/quest?questId=${questEntry.value.id}"
+                <h3>${questEntry.name}
+                    <a href="${pageContext.request.contextPath}/quest?questId=${questEntry.id}"
                        class="play-button">PLAY</a>
                 </h3>
-                <p>${questEntry.value.description}</p>
+                <p>${questEntry.description}</p>
             </div>
         </div>
     </c:forEach>

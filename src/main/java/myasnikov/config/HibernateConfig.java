@@ -34,7 +34,6 @@ public class HibernateConfig {
 
     private static Configuration getConfiguration() {
         Properties properties = new Properties();
-        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
         properties.put(Environment.URL, "jdbc:mysql://localhost:3306/game");
         properties.put(Environment.USER, "root");
         properties.put(Environment.PASS, "root");
